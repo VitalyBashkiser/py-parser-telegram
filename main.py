@@ -17,7 +17,7 @@ if __name__ == "__main__":
     with WorkUaScraper(
         job_position="python developer",
         years_of_experience=10,
-        location="Kyiv"
+        location="Kyiv",
     ) as work_ua_scraper:
         work_ua_scraper.scrape()
         work_ua_scraper.close()

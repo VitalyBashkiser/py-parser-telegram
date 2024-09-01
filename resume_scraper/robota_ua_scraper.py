@@ -168,7 +168,8 @@ class RobotaUaScraper(ResumeScraper):
                 EC.presence_of_element_located(
                     (
                         By.CSS_SELECTOR,
-                        "alliance-employer-resume-brief-info .santa-text-black-700",
+                        "alliance-employer-resume-brief-info"
+                        " .santa-text-black-700",
                     )
                 )
             )

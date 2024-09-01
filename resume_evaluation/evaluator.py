@@ -10,7 +10,8 @@ def rate_candidates(file_path, skills_list, output_file):
         rating = sum(
             1
             for skill in skills_list
-            if skill.strip().lower() in [s.strip().lower() for s in candidate_skills]
+            if skill.strip().lower()
+            in [s.strip().lower() for s in candidate_skills]
         )
         df.at[index, "rating"] = rating
 

@@ -36,7 +36,9 @@ class WorkUaScraper(ResumeScraper):
 
     def apply_filters(self, driver):
         filter_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "#filter-mobile-menu"))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "#filter-mobile-menu")
+            )
         )
         filter_button.click()
 
@@ -90,7 +92,9 @@ class WorkUaScraper(ResumeScraper):
 
     def _filter_by_years_of_experience(self, driver):
         WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "#experience_selection"))
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "#experience_selection")
+            )
         )
 
         experience_options = driver.find_elements(
@@ -122,7 +126,8 @@ class WorkUaScraper(ResumeScraper):
     def __get_resume_links_from_page(self, driver):
         resume_links = driver.find_elements(
             By.CSS_SELECTOR,
-            "div.card.card-hover.card-search.resume-link.card-visited.wordwrap a[href]",
+            "div.card.card-hover.card-search.resume-link."
+            "card-visited.wordwrap a[href]",
         )
         links = [
             link.get_attribute("href")
@@ -137,7 +142,8 @@ class WorkUaScraper(ResumeScraper):
         while True:
             resume_links = driver.find_elements(
                 By.CSS_SELECTOR,
-                "div.card.card-hover.card-search.resume-link.card-visited.wordwrap a[href]",
+                "div.card.card-hover.card-search.resume-link."
+                "card-visited.wordwrap a[href]",
             )
             links = [
                 link.get_attribute("href")
@@ -151,7 +157,8 @@ class WorkUaScraper(ResumeScraper):
                     EC.presence_of_all_elements_located(
                         (
                             By.CSS_SELECTOR,
-                            "ul.pagination li.no-style.add-left-default a.link-icon",
+                            "ul.pagination li.no-style.add-left-default"
+                            " a.link-icon",
                         )
                     )
                 )
@@ -163,7 +170,9 @@ class WorkUaScraper(ResumeScraper):
                         break
 
                 if not next_button:
-                    print("The 'Next' button is inactive or not found, finished.")
+                    print(
+                        "The 'Next' button is inactive or not found, finished."
+                    )
                     break
 
                 next_url = next_button.get_attribute("href")
@@ -194,7 +203,10 @@ class WorkUaScraper(ResumeScraper):
         try:
             skills = []
             skills_header = driver.find_element(By.CSS_SELECTOR, "h2.mb-sm")
-            if skills_header and skills_header.text.strip() == "Знання і навички":
+            if (
+                skills_header
+                and skills_header.text.strip() == "Знання і навички"
+            ):
                 skill_elements = driver.find_elements(
                     By.CSS_SELECTOR,
                     "ul.list-unstyled.my-0.flex.flex-wrap li span.ellipsis",
@@ -232,8 +244,6 @@ class WorkUaScraper(ResumeScraper):
 
 if __name__ == "__main__":
     scraper = WorkUaScraper(
-        job_position="python developer",
-        years_of_experience=1,
-        location="Kyiv"
+        job_position="python developer", years_of_experience=1, location="Kyiv"
     )
     scraper.scrape()

@@ -44,7 +44,9 @@ async def job_site(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return JOB_SITE
 
     await update.message.reply_text(
-        "You selected: {}. Now, please enter the job position:".format(user_text)
+        "You selected: {}. Now, please enter the job position:".format(
+            user_text
+        )
     )
     reply_markup = create_keyboard(["Skip"])
     await update.message.reply_text(
@@ -69,7 +71,9 @@ async def position(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return EXPERIENCE
 
 
-async def experience(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def experience(
+    update: Update, context: ContextTypes.DEFAULT_TYPE
+) -> int:
     user_text = update.message.text
     if user_text.lower() != "skip":
         try:
@@ -119,16 +123,22 @@ async def salary(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     else:
         context.user_data["salary"] = None
 
-    keyboard = [[KeyboardButton("Enter Technologies")], [KeyboardButton("Start Over")]]
+    keyboard = [
+        [KeyboardButton("Enter Technologies")],
+        [KeyboardButton("Start Over")],
+    ]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     await update.message.reply_text(
-        "Please enter the technologies (comma-separated) or choose 'Start Over':",
+        "Please enter the technologies (comma-separated)"
+        " or choose 'Start Over':",
         reply_markup=reply_markup,
     )
     return TECHNOLOGIES
 
 
-async def technologies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def technologies(
+    update: Update, context: ContextTypes.DEFAULT_TYPE
+) -> int:
     user_text = update.message.text
     if user_text.lower() == "start over":
         return await start(update, context)
@@ -148,7 +158,9 @@ async def technologies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     )
     links = fetch_results(context.user_data)
     result_text = "\n".join(links)
-    await update.message.reply_text(f"Here are the top 5 resumes:\n{result_text}")
+    await update.message.reply_text(
+        f"Here are the top 5 resumes:\n{result_text}"
+    )
     return ConversationHandler.END
 
 
@@ -158,10 +170,18 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
-            JOB_SITE: [MessageHandler(filters.TEXT & ~filters.COMMAND, job_site)],
-            POSITION: [MessageHandler(filters.TEXT & ~filters.COMMAND, position)],
-            EXPERIENCE: [MessageHandler(filters.TEXT & ~filters.COMMAND, experience)],
-            LOCATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, location)],
+            JOB_SITE: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, job_site)
+            ],
+            POSITION: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, position)
+            ],
+            EXPERIENCE: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, experience)
+            ],
+            LOCATION: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, location)
+            ],
             SALARY: [MessageHandler(filters.TEXT & ~filters.COMMAND, salary)],
             TECHNOLOGIES: [
                 MessageHandler(filters.TEXT & ~filters.COMMAND, technologies)
